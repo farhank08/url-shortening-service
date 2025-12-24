@@ -1,0 +1,24 @@
+# Node / package managers
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Git
+.git
+.gitignore
+
+# Environment files
+.env
+.env.*
+
+# OS / editor junk
+.DS_Store
+.vscode
+.idea
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Docs
+README.md
