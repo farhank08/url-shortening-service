@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { Router, Request, Response, NextFunction } from 'express';
-import UrlModel, { UrlDocument } from '../models/url.model.js';
+import UrlModel from '../models/url.model.js';
 import { normalize } from './../services/url.services.js';
 
 // Initialize router instance
