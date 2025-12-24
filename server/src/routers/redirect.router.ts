@@ -1,13 +1,13 @@
 import chalk from 'chalk';
 import { Router, Request, Response, NextFunction } from 'express';
 import UrlModel from '../models/url.model.js';
-import { normalize } from './../services/url.services.js';
+import { normalize } from '../services/url.services.js';
 
 // Initialize router instance
 const router: Router = Router();
 
 // Redirect using short code
-router.get('*', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/:shortCode', async (req: Request, res: Response, next: NextFunction) => {
 	// Handle missing short code
 	const shortCode: string | undefined = req.params.shortCode;
 	if (!shortCode) {

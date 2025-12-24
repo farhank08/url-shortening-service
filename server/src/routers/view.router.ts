@@ -11,7 +11,7 @@ const clientDistDir: string = path.resolve(__dirname, '../../client/dist');
 const router: Router = Router();
 
 // Serve client dist HTML file
-router.get('*', (req: Request, res: Response, next: NextFunction) => {
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
 	res.status(200).sendFile(path.resolve(clientDistDir, 'index.html'), (error: Error) => {
 		// Handle not found error
 		if (error) return next();
