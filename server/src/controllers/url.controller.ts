@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { Request, Response } from 'express';
-import UrlModel, { UrlDocument } from '../models/urlModel.js';
-import * as UrlShortener from '../services/urlShortener.js';
+import UrlModel, { UrlDocument } from '../models/url.model.js';
+import * as UrlShortener from '../services/url.services.js';
 
 // Create short URL
 export const createShort = async (req: Request, res: Response): Promise<Response> => {

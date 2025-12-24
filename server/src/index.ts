@@ -3,7 +3,7 @@ import { Express } from 'express';
 import { Server } from 'http';
 import mongoose from 'mongoose';
 import { createServer } from './server.js';
-import { initDb } from './services/dbClient.js';
+import { initDb } from './databases/dbClient.js';
 
 // Load environment variables
 dotenv.config();

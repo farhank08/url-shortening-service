@@ -1,5 +1,4 @@
 import mongoose, { Document } from 'mongoose';
-import { unique } from 'next/dist/build/utils.js';
 
 export interface UrlDocument extends Document {
 	url: string;

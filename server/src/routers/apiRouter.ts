@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as UrlController from '../controllers/urlController.js';
+import * as UrlController from '../controllers/url.controller.js';
 
 // Initialize router
 const router: Router = Router();

@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
-import UrlModel, { UrlDocument } from '../models/urlModel.js';
+import UrlModel, { UrlDocument } from '../models/url.model.js';
 
-// Shorten url
+// Shorten URL
 export const shorten = async (): Promise<string> => {
 	let code: string;
 
@@ -20,5 +20,15 @@ export const shorten = async (): Promise<string> => {
 
 		// Return unique code
 		return code;
+	}
+};
+
+// Normalize URL
+export const normalize = (url: string): string => {
+	const trimmedUrl = url.trim();
+	try {
+		return new URL(trimmedUrl).toString();
+	} catch {
+		return new URL(`https://${trimmedUrl}`).toString();
 	}
 };

@@ -3,6 +3,7 @@ import express, { Express } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import ApiRouter from './routers/apiRouter.js';
+import RedirectRouter from './routers/redirectRouter.js';
 import UnhandledRouteHandler from './routers/unhandledRouter.js';
 import ViewRouter from './routers/viewRouter.js';
 
@@ -26,6 +27,9 @@ export const createServer = (): Express => {
 
 	// Handle API routes
 	app.use('/api', ApiRouter);
+
+	// Handle redirect routes
+	app.use('/:shortCode', RedirectRouter);
 
 	// Handle view routes
 	app.use(ViewRouter);
