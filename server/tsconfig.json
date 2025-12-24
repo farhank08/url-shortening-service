@@ -1,0 +1,26 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		/* Check against JS language level */
+		"target": "ES2022",
+
+		/* Default globals */
+		"lib": ["ES2022"],
+
+		/* Use native ESM syntax */
+		"module": "NodeNext",
+
+		/* Align TS resolver with ESM tooling */
+		"moduleResolution": "NodeNext",
+
+		/* Source file root directory */
+		"rootDir": "src",
+
+		/* Compiled JS output directory */
+		"outDir": "dist",
+
+		/* Allow TS to write output files */
+		"noEmit": false
+	},
+	"include": ["src"]
+}
