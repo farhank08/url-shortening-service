@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { Router, Request, Response, NextFunction } from 'express';
-import UrlModel from '../models/url.model.js';
-import { normalize } from '../services/url.services.js';
+import UrlModel, { UrlDocument } from '../models/url.model.js';
+import * as UrlServices from '../services/url.services.js';
 
 // Initialize router instance
 const router: Router = Router();
@@ -24,11 +24,12 @@ router.get('/:shortCode', async (req: Request, res: Response, next: NextFunction
 
 	let originalUrl: string | null;
 	try {
-		// Retrieve original URL from database
-		originalUrl = await UrlModel.findOne({ shortCode }).select('url').lean();
+		// Retrieve original URL record from database
+		const filter = { shortCode };
+		const record: UrlDocument | null = await UrlModel.findOne(filter).lean();
 
-		// Handle original URL not found
-		if (!originalUrl) {
+		// Handle record not found
+		if (!record) {
 			console.warn(
 				`${chalk.blueBright(new Date().toLocaleString())} Request ${chalk.yellowBright(
 					req.method
@@ -39,6 +40,21 @@ router.get('/:shortCode', async (req: Request, res: Response, next: NextFunction
 				message: 'Orginal URL not found',
 			});
 		}
+
+		// Normalize original URL
+		originalUrl = UrlServices.normalize(record.url);
+
+		// TODO: Update stats for record
+		const update = {
+			$inc: { 'stats.accessCount': 1 },
+			$set: { 'stats.lastAccessed': new Date() },
+		};
+		const options = { new: true };
+		const updatedRecord: UrlDocument = await UrlModel.findOneAndUpdate(
+			filter,
+			update,
+			options
+		).lean();
 	} catch (error: unknown) {
 		// Handle database query error
 		console.error(
@@ -54,16 +70,13 @@ router.get('/:shortCode', async (req: Request, res: Response, next: NextFunction
 		});
 	}
 
-	// Normalize original URL
-	const normalizedUrl: string = normalize(originalUrl);
-
 	// Redirect to original URL
 	console.log(
 		`${chalk.blueBright(new Date().toLocaleString())} Request ${chalk.yellowBright(req.method)} ${
 			req.originalUrl
-		} ${chalk.greenBright('succeded')} : Redirected to ${normalizedUrl}`
+		} ${chalk.greenBright('succeded')} : Redirected to ${originalUrl}`
 	);
-	return res.redirect(301, normalizedUrl);
+	return res.redirect(302, originalUrl);
 });
 
 // Return router

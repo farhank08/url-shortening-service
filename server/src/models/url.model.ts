@@ -3,8 +3,9 @@ import mongoose, { Document } from 'mongoose';
 export interface UrlDocument extends Document {
 	url: string;
 	shortCode: string;
-	stats?: {
+	stats: {
 		accessCount: number;
+		lastAccessed?: Date;
 	};
 	createdAt: Date;
 	updatedAt: Date;
@@ -17,6 +18,7 @@ const urlSchema = new mongoose.Schema<UrlDocument>(
 		shortCode: { type: String, required: true, trim: true, unique: true },
 		stats: {
 			accessCount: { type: Number, default: 0 },
+			lastAccessed: { type: Date },
 		},
 	},
 	{

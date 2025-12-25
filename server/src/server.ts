@@ -25,6 +25,7 @@ export const createServer = (): Express => {
 	// Serve static files
 	app.use(express.static(clientDistDir));
 
+	// Handle auto favicon browser request
 	app.get('/favicon.ico', (req: Request, res: Response) => {
 		return res.status(204);
 	});

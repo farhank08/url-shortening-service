@@ -182,14 +182,11 @@ export const updateUrl = async (req: Request, res: Response): Promise<Response> 
 
 	let updatedUrl: UrlDocument | null;
 	try {
-		// Define filters and update
-		const filter: { shortCode: string } = { shortCode };
-		const update: { url: string } = { url };
-
 		// Update original URL
-		updatedUrl = await UrlModel.findOneAndUpdate(filter, update, {
-			new: true,
-		}).lean();
+		const filter = { shortCode };
+		const update = { $set: { url } };
+		const options = { new: true };
+		updatedUrl = await UrlModel.findOneAndUpdate(filter, update, options).lean();
 
 		// Handle short code not found
 		if (!updatedUrl) {
@@ -287,16 +284,13 @@ export const deleteUrl = async (req: Request, res: Response): Promise<Response> 
 		});
 	}
 
-	// Return with success
+	// Return with no content
 	console.log(
 		`${chalk.blueBright(new Date().toLocaleString())} Request ${chalk.yellowBright(req.method)} ${
 			req.originalUrl
 		} ${chalk.greenBright('succeded')} : Short code deleted`
 	);
-	return res.status(204).json({
-		success: true,
-		message: 'Short code deleted',
-	});
+	return res.status(204);
 };
 
 // Retrieve URL statistics
@@ -315,13 +309,13 @@ export const getStats = async (req: Request, res: Response): Promise<Response> =
 		});
 	}
 
-	let url: UrlDocument | null;
+	let record: UrlDocument | null;
 	try {
 		// Retrieve short code
-		url = await UrlModel.findOne({ shortCode }).lean();
+		record = await UrlModel.findOne({ shortCode }).lean();
 
 		// Handle short code not found
-		if (!url) {
+		if (!record) {
 			console.warn(
 				`${chalk.blueBright(new Date().toLocaleString())} Request ${chalk.yellowBright(
 					req.method
@@ -356,6 +350,6 @@ export const getStats = async (req: Request, res: Response): Promise<Response> =
 	return res.status(200).json({
 		success: true,
 		message: 'Short code stats found',
-		payload: url,
+		payload: record,
 	});
 };
