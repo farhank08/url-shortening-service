@@ -9,7 +9,7 @@ import { initDb } from './databases/dbClient.js';
 dotenv.config();
 
 // Port for server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // Connect to database
 try {
