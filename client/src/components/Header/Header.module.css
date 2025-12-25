@@ -1,0 +1,20 @@
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.logo {
+	color: rgba(255, 255, 255, 0.87);
+  font-weight: 400;
+  font-size: 2rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.25s ease;
+}
+.logo:hover {
+  background-color: #1b1b1b;
+  color: rgba(255, 255, 255, 0.75);
+}
